@@ -35,7 +35,7 @@ from sklearn.metrics import mean_squared_error
 #Function filling missing values of a dataframe df
 
 def missing_values_table(df):
-    mis_val = df.isnull().sum()
+    """mis_val = df.isnull().sum()
     mis_val_percent = 100 * df.isnull().sum() / len(df)
     mis_val_table = pd.concat([mis_val, mis_val_percent], axis=1)
     mis_val_table_ren_columns = mis_val_table.rename(
@@ -47,8 +47,8 @@ def missing_values_table(df):
         "There are " + str(mis_val_table_ren_columns.shape[0]) +
             " columns that have missing values.")
     print(missing_values_table(df))
-    df = df.fillna(df.mean())
-    return mis_val_table_ren_columns
+    df = df.fillna(df.mean())"""
+    return df
 
 #Function that normalize our data so our algorithms work better:
 
@@ -73,10 +73,28 @@ def binarisation_categorical_data(df):
     return pd.get_dummies(df)
 
 
+#Function that returns a cleaned DataFrame
 def Data_treatment(df,label_name):
     df=missing_values_table(df)
+    print("missing values filled")
+    df=binarisation_categorical_data(df)
+    print("categorical data binarised")
     df=normalize(df)
     X,y = split_data_XY(df,label_name)
-    X=binarisation_categorical_data(X)
+    print("values normalized")
     return(X,y)
+
+
+"""Visualization of the Original Data"""
+
+#Correlation matrix
+
+def corr_matrix(df):
+    plt.figure(figsize=(20,10))
+    sns.heatmap(df.corr(),annot=True)
+
+def scatter_matrix(df,label):
+    sns.pairplot(df, hue=label)
+
+
 
