@@ -44,18 +44,6 @@ from sklearn.metrics import mean_squared_error
 #Function filling missing values of a dataframe df
 
 def missing_values_table(df):
-    """mis_val = df.isnull().sum()
-    mis_val_percent = 100 * df.isnull().sum() / len(df)
-    mis_val_table = pd.concat([mis_val, mis_val_percent], axis=1)
-    mis_val_table_ren_columns = mis_val_table.rename(
-    columns = {0 : 'Missing Values', 1 : '% of Total Values'})
-    mis_val_table_ren_columns = mis_val_table_ren_columns[
-        mis_val_table_ren_columns.iloc[:,1] != 0].sort_values(
-    '% of Total Values', ascending=False).round(1)
-    print ("Your selected dataframe had " + str(df.shape[1]) + " columns.\n"      
-        "There are " + str(mis_val_table_ren_columns.shape[0]) +
-            " columns that have missing values.")
-    print(missing_values_table(df))"""
     df = df.fillna(df.mean())
     return df
 
@@ -129,7 +117,7 @@ def depht_Tuning(X,y):
      # Plot
     plt.plot(depths, tab_RMSE_tree)
     plt.xlabel('Max depth of the tree', size=20)
-    plt.ylabel('RMSE', size=20)
+    plt.ylabel("RMSE", size=20)
 
     result = np.where(tab_RMSE_tree == min(tab_RMSE_tree))
     optimal_dephts = depths[result]
@@ -206,6 +194,9 @@ def MLP_neurons_tuning(X,Y):
         MSE.append(mean_squared_error(y_test, y_pred))
 
     plt.plot(MSE)
+    plt.xlabel('Number of hidden layers', size=20)
+    plt.ylabel("MSE", size=20)
+
 
 def MLP_neurons_regression(X,Y,hidden_layer_sizes):
     t_init = time.time()
